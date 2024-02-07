@@ -2,8 +2,8 @@ import { Manifest } from "deno-slack-sdk/mod.ts";
 import Discovery from "./workflows/discovery.ts";
 
 export default Manifest({
-  name: "NextGenChatGPT",
-  description: "ChatGPT on Slack's Next Gen platform",
+  name: "DiscoReady",
+  description: "Generate Discovery questionnaires via ChatGPT in Slack",
   icon: "assets/openai.png",
   workflows: [Discovery],
   outgoingDomains: ["api.openai.com"],
