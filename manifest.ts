@@ -4,7 +4,7 @@ import Discovery from "./workflows/discovery.ts";
 export default Manifest({
   name: "DiscoReady",
   description: "Generate Discovery questionnaires via ChatGPT in Slack",
-  icon: "assets/openai.png",
+  icon: "assets/SlackChatGPT.png",
   workflows: [Discovery],
   outgoingDomains: ["api.openai.com"],
   botScopes: [
