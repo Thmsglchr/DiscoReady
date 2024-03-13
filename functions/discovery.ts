@@ -1,8 +1,6 @@
 import { DefineFunction, Schema, SlackFunction } from "deno-slack-sdk/mod.ts";
 import {
   API_KEY_ERROR,
-  buildSystemMessage,
-  calculateNumTokens, 
   callOpenAI,
   Message,
   OpenAIModel,
@@ -36,7 +34,7 @@ export default SlackFunction(def, async ({ inputs, env, token }) => {
     return { error: API_KEY_ERROR };
   }
 
-  prompt = `I am part of the Go-To-Market Team at Slack. Create a Sales Discovery questionnaire for a ${inputs.customer_role} working in a ${inputs.company_size.toLowerCase()} ${inputs.company_sector} company using the PURPOSE framework.\n`;
+  prompt = `I am part of the go-to-market Team at Slack. Create a Sales Discovery questionnaire for a ${inputs.customer_role} working in a ${inputs.company_size.toLowerCase()} ${inputs.company_sector} company using the PURPOSE framework.\n`;
   prompt += `PURPOSE stands for Pain, Use Cases, ROI, Process, Obstacles, Stakeholders, Execution.\n`;
   prompt += `- Pain focuses on Challenges, Business Impact, Deadlines\n`;
   prompt += `- Use Cases focuses on Current Setup, Desired Change, Possible Solution\n`;
@@ -48,7 +46,7 @@ export default SlackFunction(def, async ({ inputs, env, token }) => {
   if(inputs.extra_info != null)
     prompt += `Take also into account the following information into the questions: ${inputs.extra_info}\n`;
 
-  prompt += `Do not answer me as if I was asking a question but provide me with the questionnaire, and ONLY the questionnaire. It is more than essential and extremely crucial that the questionnaire is formatted so it can be easily pasted in a Slack canva.`;
+  prompt += `Do not answer me as if I was asking a question but provide me with the questionnaire, and ONLY the questionnaire. It is more than essential that you do not make any extra comment, and extremely crucial that the questionnaire is formatted so it can easily be pasted in Slack canvas.`;
 
   const messages: Message[] = [
     {
@@ -61,7 +59,6 @@ export default SlackFunction(def, async ({ inputs, env, token }) => {
     ? env.OPENAI_MODEL as OpenAIModel
     : OpenAIModel.GPT_3_5_TURBO;
   const maxTokensForThisReply = 1024;
-  const modelLimit = model === OpenAIModel.GPT_4 ? 6000 : 4000;
 
   const body = JSON.stringify({
     "model": model,
@@ -69,6 +66,6 @@ export default SlackFunction(def, async ({ inputs, env, token }) => {
     "max_tokens": maxTokensForThisReply,
   });
 
-  const answer = await callOpenAI(apiKey, 60, body);
+  const answer = await callOpenAI(apiKey, 45, body);
   return { outputs: { answer } };
 });
